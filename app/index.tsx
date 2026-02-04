@@ -1,10 +1,13 @@
+import {useState} from 'react';
 import { Text, View, StyleSheet, useWindowDimensions, Pressable } from "react-native";
 import {ImageBackground} from "expo-image";
 import { Stack } from 'expo-router';
 import {DefaultTheme} from "@react-navigation/native";
+import {responses} from "../data/responses";
 
 export default function Index() {
     const {height, width} = useWindowDimensions();
+    const [message, setMessage] = useState("");
 
     return (
         <View style={{width:width, height:height}} >
@@ -18,14 +21,15 @@ export default function Index() {
                 <View style={[((width <= 500) ? styles.window_mobile : styles.window_desktop)]}>
                     <View style={styles.container}>
                         <Text style={{ fontSize:((width <= 500) ? 25 : 35), marginVertical: 20 }}>Will you be my Valentine?</Text>
+                        <Text style={{ fontSize:((width <= 500) ? 10 : 20), marginVertical: 10 }}>{ message }</Text>
                         <View style={[styles.option_box, {flexDirection: (width <= 500) ? 'column' : 'row'}]}>
                             <Pressable
                                 style={styles.button}
-                                onPress={()=> window.alert("Yes")}
+                                onPress={()=> setMessage("You said yes!")}
                             > Yes! </Pressable>
                             <Pressable
                                 style={styles.button}
-                                onPress={()=> window.alert("No")}
+                                onPress={()=> setMessage(responses[Math.ceil(Math.random() * responses.length)])}
                             > No! </Pressable>
                         </View>
                     </View>
